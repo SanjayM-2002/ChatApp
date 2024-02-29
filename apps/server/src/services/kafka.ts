@@ -2,15 +2,23 @@ import { Kafka, Producer } from 'kafkajs';
 import fs from 'fs';
 import path from 'path';
 import prismaClient from './prisma';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const kafka = new Kafka({
-  brokers: ['kafka-d7a5242-sanjaym22-2002.a.aivencloud.com:19970'],
+  brokers: [process.env.KAFKA_BROKERS as string],
   ssl: {
-    ca: [fs.readFileSync(path.resolve('./kca.pem'), 'utf-8')],
+    ca: [
+      fs.readFileSync(
+        path.resolve(process.env.KAFKA_CA_PATH as string),
+        'utf-8'
+      ),
+    ],
   },
   sasl: {
-    username: 'avnadmin',
-    password: 'AVNS_nADqfyfdTdIQrVSEh8E',
+    username: process.env.KAFKA_USERNAME as string,
+    password: process.env.KAFKA_PASSWORD as string,
     mechanism: 'plain',
   },
 });

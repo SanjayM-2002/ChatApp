@@ -2,18 +2,21 @@ import { Server } from 'socket.io';
 import Redis from 'ioredis';
 import prismaClient from './prisma';
 import { produceMessage } from './kafka';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const pub = new Redis({
-  host: 'redis-21c24700-sanjaym22-2002.a.aivencloud.com',
+  host: process.env.REDIS_HOST,
   port: 19957,
-  username: 'default',
-  password: 'AVNS_43xhJWYFtCXbNE3ptQb',
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
 });
 const sub = new Redis({
-  host: 'redis-21c24700-sanjaym22-2002.a.aivencloud.com',
+  host: process.env.REDIS_HOST,
   port: 19957,
-  username: 'default',
-  password: 'AVNS_43xhJWYFtCXbNE3ptQb',
+  username: process.env.REDIS_USERNAME,
+  password: process.env.REDIS_PASSWORD,
 });
 
 class SocketService {
